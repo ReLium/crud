@@ -10,6 +10,9 @@ CRUD demo project in Golang
 - swagger UI http://127.0.0.1:8082/?url=http://127.0.0.1:8080/swagger.yaml
 
 
-## This project is currently in progress
-### TODOs
-- some unit tests
+## TODOs
+- refine errors handling
+- refine mongodb context usage
+- another abstraction layer to handle another entity types
+- more unit tests
+- implement zerolog for json logging (?)

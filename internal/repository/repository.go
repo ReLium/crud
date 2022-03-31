@@ -20,6 +20,8 @@ type Query struct {
 	Vaccinated *bool
 }
 
+//go:generate mockery --dir . --inpackage --name Repository
+
 type Repository interface {
 	Get(name string) (*Cat, error)
 	Delete(name string) error
