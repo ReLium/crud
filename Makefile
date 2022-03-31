@@ -11,3 +11,6 @@ run: ## run application dockers
 
 stop: ## stop application dockers
 	docker-compose stop
+
+generate: ## generate dummy cats to DB using application functionality
+	docker-compose run --rm --entrypoint "/app/main generate" crud ./...
