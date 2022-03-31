@@ -9,7 +9,7 @@ services:
     container_name: crud
     environment:
       CRUD_SERVER_PORT: 8080
-      CRUD_LOG_FILE: /etc/crud_app.log
+      CRUD_LOG_FILE: /logs/crud_app.log
       CRUD_MONGODB_HOST: mongodb://admin:pass@mongo:27017
       CRUD_MONGODB_TIMEOUT_MSEC: 1000
     ports:
@@ -17,6 +17,8 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
+    volumes:
+      - './logs/:/logs/'
 
   swagger-ui:
     image: swaggerapi/swagger-ui
