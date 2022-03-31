@@ -2,21 +2,39 @@ version: '3.8'
 
 services:
 
-  # crud:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile
-  #   container_name: crud
-  #   ports:
-  #     - 8080:8080
+  crud:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: crud
+    environment:
+      CRUD_SERVER_PORT: 8080
+      CRUD_LOG_FILE: /etc/crud_app.log
+      CRUD_MONGODB_HOST: mongodb://admin:pass@mongo:27017
+      CRUD_MONGODB_TIMEOUT_MSEC: 1000
+    ports:
+      - 8080:8080
+    depends_on:
+      mongo:
+        condition: service_healthy
+
+  swagger-ui:
+    image: swaggerapi/swagger-ui
+    container_name: "swagger-ui"
+    ports:
+      - "8082:8080"
 
   mongo:
     image: mongo:5.0.6
     environment:
       MONGO_INITDB_ROOT_USERNAME: admin
       MONGO_INITDB_ROOT_PASSWORD: pass
-    ports:
-      - 27017:27017
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongo mongo:27017/test --quiet
+      interval: 10s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
 
   mongo-express:
     image: mongo-express:0.54.0

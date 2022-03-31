@@ -1,0 +1,65 @@
+swagger: "2.0"
+info:
+  description: "Simple demo crud server with cats"
+  version: "1.0.0"
+  title: "Swagger Cats"
+  contact:
+    email: "jurij.kaminskij@gmail.com"
+host: 127.0.0.1:8080
+basePath: "/"
+schemes:
+- "http"
+
+
+paths:
+  /cats:
+    get:
+      summary: "List cats with parameters filtration"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "gender"
+        in: "query"
+        type: "string"
+        enum:
+          - "male"
+          - "female"
+      - name: "color"
+        in: "query"
+        type: "string"
+      - name: "vaccinated"
+        in: "query"
+        type: "boolean"
+
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: object
+            properties:
+              items:
+                type: "array"
+                items:
+                  $ref: "#/definitions/Cat"
+            
+
+definitions:
+  Cat:
+    type: "object"
+    required:
+    - "name"
+    - "gender"
+    - "color"
+    - "vaccinated"
+    properties:
+      name:
+        type: "string"
+        example: "Felix"
+      gender:
+        type: "string"
+        enum: ["male", "female"]
+      color:
+        type: "string"
+        example: "black"
+      vaccinated:
+        type: "boolean"

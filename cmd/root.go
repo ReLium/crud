@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
 )
 
@@ -17,7 +19,8 @@ var (
 		Use:   "server",
 		Short: "Start http server",
 		Run: func(cmd *cobra.Command, args []string) {
-			Server()
+			err := Server()
+			fmt.Print(err)
 		},
 	}
 )

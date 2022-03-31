@@ -9,6 +9,7 @@ FROM alpine:3.15
 RUN apk --no-cache add ca-certificates
 RUN mkdir /app
 COPY --from=builder /src/main /app/main
+COPY --from=builder /src/doc /doc
 RUN chmod +x /app/main
 
 ENTRYPOINT ["/app/main", "server"]

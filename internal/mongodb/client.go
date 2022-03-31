@@ -9,8 +9,8 @@ import (
 )
 
 type MongoClient struct {
-	Client *mongo.Client
-	ctx    context.Context
+	Client              *mongo.Client
+	timeoutMilliseconds int
 }
 
 func NewClient(host string, timeoutMilliseconds int) (*MongoClient, error) {
@@ -27,17 +27,19 @@ func NewClient(host string, timeoutMilliseconds int) (*MongoClient, error) {
 		return &MongoClient{}, err
 	}
 
-	client.Ping(context.TODO(), nil)
+	err = client.Ping(ctx, nil)
 	if err != nil {
 		return &MongoClient{}, err
 	}
 
 	return &MongoClient{
-		Client: client,
-		ctx:    ctx,
+		Client:              client,
+		timeoutMilliseconds: timeoutMilliseconds,
 	}, nil
 }
 
 func (c *MongoClient) Disconnect() error {
-	return c.Client.Disconnect(c.ctx)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(c.timeoutMilliseconds)*time.Millisecond)
+	defer cancel()
+	return c.Client.Disconnect(ctx)
 }
