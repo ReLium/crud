@@ -12,7 +12,4 @@ CRUD demo project in Golang
 
 ## This project is currently in progress
 ### TODOs
-- completion of documentation
 - some unit tests
-- logging improvements
-- code refine
