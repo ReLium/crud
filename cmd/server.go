@@ -16,7 +16,7 @@ func Server() error {
 	if err != nil {
 		return err
 	}
-	s := server.NewServer(repository.NewMongoDBRepo(mongoDBClient))
+	s := server.NewServer(repository.NewLogWrapper(repository.NewMongoDBRepo(mongoDBClient)))
 
 	port, ok := os.LookupEnv("CRUD_SERVER_PORT")
 	if !ok {

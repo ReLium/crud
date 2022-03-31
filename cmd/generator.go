@@ -12,10 +12,10 @@ import (
 )
 
 const (
-	workerCount      = 10
-	requestPerSecond = 100
-	count            = 1000
-	buffer           = 10
+	workerCount      = 5
+	requestPerSecond = 10
+	count            = 100
+	buffer           = 5
 )
 
 type Generator struct {
@@ -32,10 +32,9 @@ func Generate() error {
 	if err != nil {
 		return err
 	}
-	repo := repository.NewMongoDBRepo(mongoDBClient)
 	generator := &Generator{
 		count:       count,
-		repository:  repo,
+		repository:  repository.NewLogWrapper(repository.NewMongoDBRepo(mongoDBClient)),
 		queue:       make(chan repository.Cat, buffer),
 		speedLimit:  time.Tick(time.Second / requestPerSecond),
 		progressBar: pb.New(count),
