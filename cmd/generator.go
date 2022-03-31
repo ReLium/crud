@@ -13,7 +13,7 @@ import (
 
 const (
 	workerCount      = 5
-	requestPerSecond = 10
+	requestPerSecond = 25
 	count            = 100
 	buffer           = 5
 )
@@ -61,6 +61,7 @@ func (r *Generator) Process() error {
 	close(r.queue)
 	wg.Wait()
 	r.progressBar.Finish()
+	fmt.Println("Done!")
 	return nil
 }
 

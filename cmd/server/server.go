@@ -170,6 +170,7 @@ func (s *Server) parseCatParams(r *http.Request) *catParams {
 func (s *Server) allowCORS(h http.Handler) http.Handler {
 	fn := func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "*")
 		h.ServeHTTP(w, r)
 	}
 	return http.HandlerFunc(fn)
